@@ -1,0 +1,111 @@
+
+\documentclass[11pt, a4paper]{article}
+
+% 必要的宏包
+\usepackage{fontspec, graphicx, titlesec, xunicode, xltxtra, natbib}
+\usepackage{indentfirst, listings, xcolor, verbatim, fancyvrb, mdframed}
+
+% 显示中文的名称,定义新的命令
+\renewcommand{\abstractname}{摘要} 
+\renewcommand{\contentsname}{目录} 
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\indexname}{索引}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{图}
+\renewcommand{\lstlistingname}{代码}
+
+% 定义我们的页面样式
+\newpagestyle{main}{
+	% 字体设置
+	\setmainfont{Microsoft YaHei}
+
+	% 使用中文的断行规则
+	\XeTeXlinebreaklocale "zh"
+	\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+
+	% 页边距设置
+	\usepackage[top = 1.2in, bottom = 1.2in, left = 1.2in, right = 1in]{geometry}
+
+	% 页眉和页脚设置
+	\sethead{\small\S\, \thesection\quad\sectiontitle}{}{$\cdot$~\thepage~$\cdot$}
+	\setfoot{}{}{}
+	\headrule
+	%\footrule
+
+	% 设置章节目录深度
+	\setcounter{tocdepth}{1}
+
+	% 设置章节标题格式
+	\titleformat{\section}{\centering\Large\bfseries}{\S\,\thesection}{1em}{}
+	\titleformat{\subsection}{\large\bfseries}{\S\,\thesubsection}{1em}{}
+	
+	% 段落首行缩进 2 字符
+	\setlength{\parindent}{2em}
+
+	% 段间距
+	\setlength{\parskip}{0.5\baselineskip}
+}
+
+% 设置文档页的样式
+\pagestyle{main}
+
+% 嵌入代码格式设置
+\lstset{numbers = left, 
+	keywordstyle = \color{blue}\bfseries,
+	numberstyle = \small\color{black},
+	backgroundcolor = \color{lightgray},
+	basicstyle=\footnotesize,
+	stepnumber = 1,
+	showstringspaces=false,
+	showspaces = false,
+	showtabs = false,
+	tabsize = 8,
+	breaklines = true,
+	extendedchars = false
+}
+
+% 修改日期的显示格式
+\renewcommand{\today}{\number\year 年\number\month 月\number\day 日}
+
+% 设置文档标题和作者信息
+\title{linux同步与互斥}
+\author{shui}
+\date{\today}
+
+% 设置参考文献的格式
+\bibliographystyle{plain}
+
+% 文档内容从这里开始
+\begin{document}
+
+% 输出标题
+\maketitle
+https://drock.sinaapp.com
+% 换页
+\clearpage
+\par
+简单说明内核中和用户态中进程和线程同步与互斥的问题。\allowbreak
+\par 
+在用户空间应用程序和内核自身中，如果多个进程共享一个资源，进程彼此在访问共享资源时，会发生竞争的\allowbreak
+现象，也就会干扰彼此的正常运行。\allowbreak
+\par
+进程采用"同步"和"互斥"两种方式来解决这个问题。对于"同步"来说，就是对于共享资源，进程必须严格按照一定的
+先后顺序来运行，而先后顺序依赖于要完成的的任务。（对于读写锁，读锁是可以同时访问的，写锁当前只能有一个
+进程执行）。对于"互斥"来说，对于共享资源，当前当且仅当只能有一个进程在执行，其他的进程会互相排斥，
+不能执行，必须等待一个进程执行完毕。
+对于"同步"和"互斥"，"同步"是一种更复杂的"互斥"，"互斥"是一个特殊的"同步"。\allowbreak
+\par
+当然我们不得不提到"临界区"这个概念，就是进程的执行在不应该的地方被中断，从而导致进程工作不正确。
+对于同步和互斥都是围绕这临界区资源来说（临界区特指程序的数据段，而不是代码段）。
+
+\par 
+我们采用了锁的原理来保证同步和互斥这两种方法。\allowbreak
+\par
+原子操作是最简单的锁的操作。所谓的原子操作就是不可中断的一个或一系列的操作。 
+
+
+\end{document}
+
