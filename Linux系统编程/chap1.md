@@ -5,6 +5,7 @@
 * 祝洪凯 李妹芳 付途 译
 * 关于 Robert Love 是<<Linux Kernel Development>>的作者，目前是google的工程师，对Linux内核和gnome做了很多贡献
 * 第一章
+
 ***
 * __系统调用(Syscall)__：Linux2.6之前是使用int0x80(中断)来实现系统调用的，在2.6之后的内核是使用sysentry/sysexit(32位机器)指令来实现的系统调用，这两条指令是CPU原生支持的是内核向上层库(是应用提供的接口)，API的一个特例，也是从ring3到ring0的一种方式。
 ***
