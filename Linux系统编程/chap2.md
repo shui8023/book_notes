@@ -8,13 +8,14 @@
 
 ***
 * __文件描述符__(File Describe):是一个非负整数，使用C语言的int类型的表示，一个进程打开的文件个数默认的Soft Limit是1024,Hard Limit是4096,可以通过/proc/xxx/limits查看。也可以通过ulimit -a/-n 来查看。由于是用int表示fd，所以最大值是int表示的最大值。按照惯例，每个进程至少包含三个文件描述符：0,1,2。0：代表标准输入，1：代表标准输出，3：代表标准错误。Linux C使用三个宏来表示，分别是STDIN_FILENO,STDOUT_FILENO, STDERR_FILENO。关于Linux 下文件I/O都是基于文件描述符来实现的。
+
 如何修改一个进程打开的最大文件数目,在/etc/security/limits.conf文件下添加下面代码，文件中详细介绍了如何修改
 系统中的一些限制
 ```C
 	* soft nofile 65535
 	* soft nofile 65535
 ```
-Ps:*代表了所有的用户
+	Ps:*代表了所有的用户
 
 ***
 * __open()__:int open(const char *name, )
